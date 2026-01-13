@@ -12,9 +12,17 @@ bool canAssignColor(
     int d
 );
 
+// Guloso simples
 std::vector<int> greedyDefectiveColoring(
     const Graph& g,
     int d
+);
+
+// Guloso randomizado 
+std::vector<int> greedyRandomizedDefectiveColoring(
+    const Graph& g,
+    int d,
+    double alpha
 );
 
 #endif
