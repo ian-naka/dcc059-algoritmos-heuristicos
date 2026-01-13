@@ -4,6 +4,7 @@
 #include "Graph.h"
 #include <vector>
 
+// Função auxiliar
 bool canAssignColor(
     int v,
     int color,
@@ -18,11 +19,20 @@ std::vector<int> greedyDefectiveColoring(
     int d
 );
 
-// Guloso randomizado 
+// Guloso randomizado (GRASP)
 std::vector<int> greedyRandomizedDefectiveColoring(
     const Graph& g,
     int d,
     double alpha
+);
+
+// Guloso randomizado reativo
+std::vector<int> greedyReactiveDefectiveColoring(
+    const Graph& g,
+    int d,
+    const std::vector<double>& alphas,
+    int iterations,
+    int blockSize
 );
 
 #endif

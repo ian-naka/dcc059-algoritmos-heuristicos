@@ -18,16 +18,17 @@ int main() {
     g.addEdge(1,3);
 
     int d = 1;
-    double alpha = 0.5;
 
-    auto solGulosa = greedyDefectiveColoring(g, d);
-    auto solRand = greedyRandomizedDefectiveColoring(g, d, alpha);
+    std::vector<double> alphas = {0.1, 0.3, 0.5, 0.7};
+    int iterations = 300;
+    int blockSize = 30;
 
-    std::cout << "\nGuloso simples:\n";
-    std::cout << "Cores: " << countColors(solGulosa) << "\n";
+    auto sol = greedyReactiveDefectiveColoring(
+        g, d, alphas, iterations, blockSize
+    );
 
-    std::cout << "\nGuloso randomizado (alpha = " << alpha << "):\n";
-    std::cout << "Cores: " << countColors(solRand) << "\n";
+    std::cout << "\nGuloso Randomizado Reativo:\n";
+    std::cout << "Cores utilizadas: " << countColors(sol) << "\n";
 
     return 0;
 }
