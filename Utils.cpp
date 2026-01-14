@@ -12,7 +12,7 @@ void initRandom(int seed) {
         seed = chrono::steady_clock::now().time_since_epoch().count();
     }
     rng.seed(seed);
-    cout << 'SEED: ' << seed << endl;
+    cout << "SEED: " << seed << endl;
 }
 
 int countColors(const vector<int>& colors) {
