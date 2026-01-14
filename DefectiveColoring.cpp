@@ -4,156 +4,139 @@
 #include <random>
 #include <limits>
 
-// --------------------------------------------------
-// Função auxiliar
-bool canAssignColor(
-    int v,
-    int color,
-    const Graph& g,
-    const std::vector<int>& colors,
-    int d
-) {
-    int conflicts = 0;
+using namespace std;
 
-    for (int u : g.adj[v]) {
-        if (colors[u] == color) {
-            conflicts++;
-            if (conflicts > d)
-                return false;
+// --------------------------------------------------
+// Função auxiliar: verifica se pintar v com 'color' viola o limite d
+bool canAssignColor(int v, int color, const Graph& g, const std::vector<int>& colors, int d) {
+    int defects = 0;
+    for (int neighbor : g.adj[v]) {
+        if (colors[neighbor] == color) {
+            defects++;
+            if (defects > d) return false;
         }
     }
     return true;
 }
 
 // --------------------------------------------------
-// Guloso simples
-std::vector<int> greedyDefectiveColoring(
-    const Graph& g,
-    int d
-) {
-    std::vector<int> colors(g.n, -1);
-    int maxColor = 0;
+// Guloso simples: ordenado por grau
+std::vector<int> greedyDefectiveColoring(const Graph& g, int d) {
+    vector<int> colors(g.n, -1);
+    // Cria vetor de índices e ordena por grau (maior grau primeiro)
+    vector<int> nodes(g.n);
+    iota(nodes.begin(), nodes.end(), 0);
+    
+    sort(nodes.begin(), nodes.end(), [&](int a, int b) {
+        return g.getDegree(a) > g.getDegree(b);
+    });
 
-    for (int v = 0; v < g.n; v++) {
-        for (int c = 0; c <= maxColor; c++) {
+    int maxColorUsed = 0;
+    for (int v : nodes) {
+        int c = 0;
+        while (true) {
             if (canAssignColor(v, c, g, colors, d)) {
                 colors[v] = c;
-                break;
+                if (c > maxColorUsed) maxColorUsed = c;
+                break; 
             }
+            c++;
         }
-
-        if (colors[v] == -1)
-            colors[v] = ++maxColor;
     }
-
     return colors;
 }
 
 // --------------------------------------------------
-// Guloso randomizado
-std::vector<int> greedyRandomizedDefectiveColoring(
-    const Graph& g,
-    int d,
-    double alpha
-) {
-    std::vector<int> colors(g.n, -1);
-    std::vector<int> uncolored(g.n);
+// Guloso randomizado: (GRASP com Alpha)
+vector<int> greedyRandomizedDefectiveColoring(const Graph& g, int d, double alpha) {
+    vector<int> colors(g.n, -1);
+    vector<int> candidates(g.n);
+    iota(candidates.begin(), candidates.end(), 0);
 
-    for (int i = 0; i < g.n; i++)
-        uncolored[i] = i;
+    while (!candidates.empty()) {
+        // Ordena candidatos restantes pelo grau
+        sort(candidates.begin(), candidates.end(), [&](int a, int b) {
+            return g.getDegree(a) > g.getDegree(b);
+        });
 
-    int maxColor = 0;
+        // Define tamanho da Lista Restrita de Candidatos (RCL)
+        int range = max(1, (int)(candidates.size() * alpha));
 
-    while (!uncolored.empty()) {
-        std::sort(uncolored.begin(), uncolored.end(),
-            [&](int a, int b) {
-                return g.adj[a].size() > g.adj[b].size();
-            });
-
-        int rclSize = std::max(1, (int)(alpha * uncolored.size()));
-        std::uniform_int_distribution<int> dist(0, rclSize - 1);
-
+        // Sorteia dentro da RCL
+        uniform_int_distribution<int> dist(0, range - 1);
         int idx = dist(rng);
-        int v = uncolored[idx];
+        
+        int v = candidates[idx];
+        candidates.erase(candidates.begin() + idx);
 
-        for (int c = 0; c <= maxColor; c++) {
+        int c = 0;
+        while (true) {
             if (canAssignColor(v, c, g, colors, d)) {
                 colors[v] = c;
                 break;
             }
+            c++;
         }
-
-        if (colors[v] == -1)
-            colors[v] = ++maxColor;
-
-        uncolored.erase(uncolored.begin() + idx);
     }
-
     return colors;
 }
 
 // --------------------------------------------------
-// Guloso Randomizado Reativo
-std::vector<int> greedyReactiveDefectiveColoring(
-    const Graph& g,
-    int d,
-    const std::vector<double>& alphas,
-    int iterations,
+// Guloso Randomizado Reativo: auto-ajuste
+vector<int> greedyReactiveDefectiveColoring(
+    const Graph& g, int d, 
+    const vector<double>& alphas, 
+    int iterations, 
     int blockSize
 ) {
     int m = alphas.size();
+    vector<double> probabilities(m, 1.0 / m); 
+    vector<double> sumSolutions(m, 0.0);      
+    vector<int> countUsage(m, 0);             
 
-    std::vector<double> probabilities(m, 1.0 / m);
-    std::vector<double> avgQuality(m, 0.0);
-    std::vector<int> usage(m, 0);
-
-    std::vector<int> bestSolution;
-    int bestCost = std::numeric_limits<int>::max();
-
-    std::discrete_distribution<int> alphaDist(
-        probabilities.begin(), probabilities.end()
-    );
+    vector<int> bestSolution;
+    int bestCost = numeric_limits<int>::max();
 
     for (int it = 1; it <= iterations; it++) {
-        int idx = alphaDist(rng);
+        // Escolhe Alpha
+        discrete_distribution<int> dist(probabilities.begin(), probabilities.end());
+        int idx = dist(rng);
         double alpha = alphas[idx];
 
-        auto solution = greedyRandomizedDefectiveColoring(g, d, alpha);
-        int cost = countColors(solution);
+        // Executa
+        vector<int> sol = greedyRandomizedDefectiveColoring(g, d, alpha);
+        int cost = countColors(sol); 
 
-        usage[idx]++;
-        avgQuality[idx] += cost;
-
+        // Atualiza melhor
         if (cost < bestCost) {
             bestCost = cost;
-            bestSolution = solution;
+            bestSolution = sol;
         }
 
-        // Atualiza probabilidades a cada bloco
+        // Estatísticas
+        sumSolutions[idx] += cost;
+        countUsage[idx]++;
+
+        // Atualiza probabilidades no fim do bloco
         if (it % blockSize == 0) {
-            double sum = 0.0;
+            double sumQ = 0.0;
+            vector<double> q(m, 0.0);
 
-            for (int i = 0; i < m; i++) {
-                if (usage[i] > 0)
-                    avgQuality[i] /= usage[i];
-                else
-                    avgQuality[i] = bestCost * 2;
-
-                probabilities[i] = 1.0 / avgQuality[i];
-                sum += probabilities[i];
+            for(int i=0; i<m; i++) {
+                if(countUsage[i] > 0) {
+                    double avg = sumSolutions[i] / countUsage[i];
+                    // Q = (Melhor / Média)^10
+                    q[i] = pow((double)bestCost / avg, 10.0); 
+                } else {
+                    q[i] = 0.01; 
+                }
+                sumQ += q[i];
             }
 
-            for (int i = 0; i < m; i++) {
-                probabilities[i] /= sum;
-                avgQuality[i] = 0.0;
-                usage[i] = 0;
+            for(int i=0; i<m; i++) {
+                probabilities[i] = q[i] / sumQ;
             }
-
-            alphaDist = std::discrete_distribution<int>(
-                probabilities.begin(), probabilities.end()
-            );
         }
     }
-
     return bestSolution;
 }
