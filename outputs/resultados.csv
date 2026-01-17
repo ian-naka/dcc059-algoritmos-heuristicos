@@ -1,1 +1,41 @@
 instances/dsjc250.5.col.txt,guloso,d=1,1768661871,0.0022777,27
+instances/dsjc250.5.col.txt,rand,d=1 alpha=0.100000 iter=300,1768676788,0.129229,25
+instances/dsjc250.5.col.txt,rand,d=1 alpha=0.300000 iter=300,1768676801,0.129683,25
+instances/dsjc250.5.col.txt,rand,d=1 alpha=0.500000 iter=300,1768676808,0.118848,26
+instances/dsjc250.5.col.txt,reativo,d=1 iter=500 block=50,1768676813,0.206535,25
+
+instances/dsjc500.1.col.txt,guloso,d=1,1768676963,0.000108167,12
+instances/dsjc500.1.col.txt,rand,d=1 alpha=0.100000 iter=300,1768676963,0.388966,11
+instances/dsjc500.1.col.txt,rand,d=1 alpha=0.300000 iter=300,1768676963,0.409324,11
+instances/dsjc500.1.col.txt,rand,d=1 alpha=0.500000 iter=300,1768676963,0.413928,12
+instances/dsjc500.1.col.txt,reativo,d=1 iter=500 block=50,1768676964,0.667105,11
+
+instances/dsjc500.5.col.txt,guloso,d=1,1768677026,0.000717167,48
+instances/dsjc500.5.col.txt,rand,d=1 alpha=0.100000 iter=300,1768677027,0.569807,46
+instances/dsjc500.5.col.txt,rand,d=1 alpha=0.300000 iter=300,1768677027,0.565315,46
+instances/dsjc500.5.col.txt,rand,d=1 alpha=0.500000 iter=300,1768677028,0.558861,47
+instances/dsjc500.5.col.txt,reativo,d=1 iter=500 block=50,1768677028,0.9373,46
+
+instances/dsjc500.9.col.txt,guloso,d=1,1768677057,0.002567,109
+instances/dsjc500.9.col.txt,rand,d=1 alpha=0.100000 iter=300,1768677057,1.15882,109
+instances/dsjc500.9.col.txt,rand,d=1 alpha=0.300000 iter=300,1768677058,1.17452,108
+instances/dsjc500.9.col.txt,rand,d=1 alpha=0.500000 iter=300,1768677059,1.17256,110
+instances/dsjc500.9.col.txt,reativo,d=1 iter=500 block=50,1768677061,1.94261,110
+
+instances/dsjc1000.1.col.txt,guloso,d=1,1768677091,0.0004055,20
+instances/dsjc1000.1.col.txt,rand,d=1 alpha=0.100000 iter=300,1768677091,1.71889,19
+instances/dsjc1000.1.col.txt,rand,d=1 alpha=0.300000 iter=300,1768677092,1.74582,19
+instances/dsjc1000.1.col.txt,rand,d=1 alpha=0.500000 iter=300,1768677094,1.74617,20
+instances/dsjc1000.1.col.txt,reativo,d=1 iter=500 block=50,1768677096,2.89111,19
+
+instances/dsjc1000.5.col.txt,guloso,d=1,1768677116,0.00396604,87
+instances/dsjc1000.5.col.txt,rand,d=1 alpha=0.100000 iter=300,1768677116,2.70321,83
+instances/dsjc1000.5.col.txt,rand,d=1 alpha=0.300000 iter=300,1768677119,2.70199,83
+instances/dsjc1000.5.col.txt,rand,d=1 alpha=0.500000 iter=300,1768677122,2.69496,84
+instances/dsjc1000.5.col.txt,reativo,d=1 iter=500 block=50,1768677124,4.45546,84
+
+instances/dsjc1000.9.col.txt,guloso,d=1,1768677160,0.0168767,208
+instances/dsjc1000.9.col.txt,rand,d=1 alpha=0.100000 iter=300,1768677160,6.44268,204
+instances/dsjc1000.9.col.txt,rand,d=1 alpha=0.300000 iter=300,1768677166,6.4573,205
+instances/dsjc1000.9.col.txt,rand,d=1 alpha=0.500000 iter=300,1768677173,6.42002,205
+instances/dsjc1000.9.col.txt,reativo,d=1 iter=500 block=50,1768677180,10.6726,204
