@@ -85,5 +85,22 @@ int main(int argc, char* argv[]) {
 
     saveToCSV("outputs/resultados.csv", inputFile, algo, params, seed, duration.count(), coresUsadas);
 
+
+    //adicionando exportação para o cs academy 
+
+    cout << "\n=== GRAFO ORIGINAL (CS Academy formato) ===" << endl;
+    printGraphCSAcademy(g);
+    
+    //Salvando no arquivo
+    string outputFile = "outputs/grafo_csacademy.txt";
+    printGraphCSAcademy(g, outputFile);
+    
+    // Salvando solução colorida
+    string coloredFile = "outputs/solucao_colorida.txt";
+    printColoredGraphCSAcademy(g, solution, coloredFile);
+    
+    cout << "\nVoce pode copiar o conteudo dos arquivos e colar em:" << endl;
+    cout << "http://csacademy.com/app/grapheditor/" << endl;
+    
     return 0;
 }

@@ -23,3 +23,87 @@ int countColors(const vector<int>& colors) {
     }
     return max_c + 1;
 }
+
+void printGraphCSAcademy(const Graph& g, const string& filename) {
+    ostream* out = &cout;
+    ofstream file;
+    
+    if (!filename.empty()) {
+        file.open(filename);
+        if (!file.is_open()) {
+            cerr << "Erro ao abrir arquivo " << filename << endl;
+            return;
+        }
+        out = &file;
+    }
+    
+
+    set<pair<int,int>> edges;
+    for (int u = 0; u < g.n; u++) {
+        for (int v : g.adj[u]) {
+            if (u < v) { 
+                edges.insert({u, v});
+            }
+        }
+    }
+    
+ 
+    *out << g.n << " " << edges.size() << endl;
+    
+
+    for (const auto& [u, v] : edges) {
+        *out << u << " " << v << endl;
+    }
+    
+    if (!filename.empty()) {
+        file.close();
+        cout << "Grafo salvo em: " << filename << endl;
+    }
+}
+
+
+void printColoredGraphCSAcademy(const Graph& g, const vector<int>& colors, const string& filename) {
+    ostream* out = &cout;
+    ofstream file;
+    
+    if (!filename.empty()) {
+        file.open(filename);
+        if (!file.is_open()) {
+            cerr << "Erro ao abrir arquivo " << filename << endl;
+            return;
+        }
+        out = &file;
+    }
+    
+
+    set<pair<int,int>> edges;
+    for (int u = 0; u < g.n; u++) {
+        for (int v : g.adj[u]) {
+            if (u < v) {
+                edges.insert({u, v});
+            }
+        }
+    }
+    
+    *out << g.n << " " << edges.size() << endl;
+    
+ 
+    for (const auto& [u, v] : edges) {
+        int weight = 1;
+        if (colors[u] == colors[v]) {
+            weight = 999; 
+        }
+        *out << u << " " << v << " " << weight << endl;
+    }
+    
+    
+    *out << endl << "# Cores dos vertices:" << endl;
+    for (int v = 0; v < g.n; v++) {
+        *out << "# Vertice " << v << " -> Cor " << colors[v] << endl;
+    }
+    
+    if (!filename.empty()) {
+        file.close();
+        cout << "Grafo colorido salvo em: " << filename << endl;
+    }
+}
