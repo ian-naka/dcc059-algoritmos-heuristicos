@@ -39,3 +39,8 @@ instances/dsjc1000.9.col.txt,rand,d=1 alpha=0.100000 iter=300,1768677160,6.44268
 instances/dsjc1000.9.col.txt,rand,d=1 alpha=0.300000 iter=300,1768677166,6.4573,205
 instances/dsjc1000.9.col.txt,rand,d=1 alpha=0.500000 iter=300,1768677173,6.42002,205
 instances/dsjc1000.9.col.txt,reativo,d=1 iter=500 block=50,1768677180,10.6726,204
+instances/dsjc250.5.col.txt,guloso,d=1,1768997560,0.000152708,27
+instances/dsjc250.5.col.txt,guloso,d=1,1768997738,0.00082425,34
+instances/teste_k4.txt,guloso,d=0,1768998323,1.208e-06,4
+instances/teste_k4.txt,guloso,d=1,1768998379,6.67e-07,2
+instances/dsjc250.5.col.txt,guloso,d=1,1768998785,0.000413833,34
