@@ -9,11 +9,21 @@ using namespace std;
 // --------------------------------------------------
 // Função auxiliar: verifica se pintar v com 'color' viola o limite d
 bool canAssignColor(int v, int color, const Graph& g, const std::vector<int>& colors, int d) {
-    int defects = 0;
+    int my_defects = 0;
+
     for (int neighbor : g.adj[v]) {
         if (colors[neighbor] == color) {
-            defects++;
-            if (defects > d) return false;
+
+            my_defects++;
+            if (my_defects > d) return false;
+            int neighbor_defects = 0;
+            for (int neighbor_of_neighbor : g.adj[neighbor]) {
+                if (colors[neighbor_of_neighbor] == color) {
+                    neighbor_defects++;
+                }
+            }
+
+            if (neighbor_defects + 1 > d) return false;
         }
     }
     return true;

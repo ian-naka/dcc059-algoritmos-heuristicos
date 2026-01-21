@@ -78,6 +78,12 @@ int main(int argc, char* argv[]) {
     auto end = chrono::high_resolution_clock::now();
     chrono::duration<double> duration = end - start;
 
+    if (validateSolution(g, solution, d)) {
+        cout << ">>> SOLUCAO VALIDA! O grafo respeita o limite d=" << d << endl;
+    } else {
+        cout << ">>> SOLUCAO INVALIDA! Algo deu errado." << endl;
+    }
+
     int coresUsadas = countColors(solution);
     cout << "----------------------------------" << endl;
     cout << "Resultado: " << coresUsadas << " cores." << endl;
@@ -85,17 +91,6 @@ int main(int argc, char* argv[]) {
 
     saveToCSV("outputs/resultados.csv", inputFile, algo, params, seed, duration.count(), coresUsadas);
 
-
-    //adicionando exportação para o cs academy 
-
-    cout << "\n=== GRAFO ORIGINAL (CS Academy formato) ===" << endl;
-    printGraphCSAcademy(g);
-    
-    //Salvando no arquivo
-    string outputFile = "outputs/grafo_csacademy.txt";
-    printGraphCSAcademy(g, outputFile);
-    
-    // Salvando solução colorida
     string coloredFile = "outputs/solucao_colorida.txt";
     printColoredGraphCSAcademy(g, solution, coloredFile);
     
