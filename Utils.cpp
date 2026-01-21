@@ -68,42 +68,46 @@ void printColoredGraphCSAcademy(const Graph& g, const vector<int>& colors, const
     
     if (!filename.empty()) {
         file.open(filename);
-        if (!file.is_open()) {
-            cerr << "Erro ao abrir arquivo " << filename << endl;
-            return;
-        }
+        if (!file.is_open()) { return; }
         out = &file;
     }
-    
 
-    set<pair<int,int>> edges;
+    for(int i=0; i<g.n; i++) {
+        // imprime o nó com a cor ao lado para você ver visualmente
+
+        *out << i << "(C" << colors[i] << ")" << endl;
+    }
+
+    // imprime as arestas usando os mesmos nomes
     for (int u = 0; u < g.n; u++) {
         for (int v : g.adj[u]) {
-            if (u < v) {
-                edges.insert({u, v});
+            if (u < v) { 
+                *out << u << "(C" << colors[u] << ") " << v << "(C" << colors[v] << ")" << endl;
             }
         }
     }
     
-    *out << g.n << " " << edges.size() << endl;
-    
- 
-    for (const auto& [u, v] : edges) {
-        int weight = 1;
-        if (colors[u] == colors[v]) {
-            weight = 999; 
+    if (!filename.empty()) file.close();
+}
+
+bool validateSolution(const Graph& g, const vector<int>& solution, int d) {
+    for (int u = 0; u < g.n; u++) {
+        int defects = 0;
+        int myColor = solution[u];
+        
+        // conta vizinhos com a mesma cor
+        for (int v : g.adj[u]) {
+            if (solution[v] == myColor) {
+                defects++;
+            }
         }
-        *out << u << " " << v << " " << weight << endl;
+        
+        // se violou a regra, avisa e falha
+        if (defects > d) {
+            cout << "ERRO! Vertice " << u << " tem " << defects 
+                 << " vizinhos da mesma cor (limite: " << d << ")" << endl;
+            return false;
+        }
     }
-    
-    
-    *out << endl << "# Cores dos vertices:" << endl;
-    for (int v = 0; v < g.n; v++) {
-        *out << "# Vertice " << v << " -> Cor " << colors[v] << endl;
-    }
-    
-    if (!filename.empty()) {
-        file.close();
-        cout << "Grafo colorido salvo em: " << filename << endl;
-    }
+    return true;
 }

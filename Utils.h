@@ -14,6 +14,7 @@ void initRandom(int seed = -1);
 int countColors(const std::vector<int>& colors);
 void printGraphCSAcademy(const Graph& g, const std::string& filename = "");
 void printColoredGraphCSAcademy(const Graph& g, const std::vector<int>& colors, const std::string& filename = "");
+bool validateSolution(const Graph& g, const std::vector<int>& solution, int d);
 
 
 #endif
