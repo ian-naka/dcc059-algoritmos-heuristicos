@@ -46,3 +46,4 @@ instances/teste_k4.txt,guloso,d=1,1768998379,6.67e-07,2
 instances/dsjc250.5.col.txt,guloso,d=1,1768998785,0.000413833,34
 instances/dsjc1000.5.col.txt,guloso,d=1,1769088856,0.0589916,86
 instances/dsjc250.5.col.txt,guloso,d=1,1769088882,0.0016111,27
+instances/dsjc125.1.col.txt,rand,d=1 alpha=0.300000 iter=30,1769089086,0.0368343,4
