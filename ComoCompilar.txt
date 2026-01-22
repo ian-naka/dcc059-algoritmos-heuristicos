@@ -1,0 +1,19 @@
+Usando o  g++: 
+
+Na raiz do diretório:
+      
+      g++ -std=c++17 -o main *.cpp -O3
+      
+      ./main instances/teste_k4.txt guloso 1
+      
+      mkdir -p outputs
+
+      Comando padrão: 
+
+      ./main <instancia> <metodo> <semente>
+
+      exemplos: 
+
+          ./main instances/dsjc250.5.col.txt guloso 1
+          ./main instances/dsjc250.5.col.txt rand 1 0.3 300
+          ./main instances/dsjc250.5.col.txt reativo 1 1000 100
