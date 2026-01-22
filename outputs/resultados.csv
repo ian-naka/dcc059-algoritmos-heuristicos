@@ -44,3 +44,5 @@ instances/dsjc250.5.col.txt,guloso,d=1,1768997738,0.00082425,34
 instances/teste_k4.txt,guloso,d=0,1768998323,1.208e-06,4
 instances/teste_k4.txt,guloso,d=1,1768998379,6.67e-07,2
 instances/dsjc250.5.col.txt,guloso,d=1,1768998785,0.000413833,34
+instances/dsjc1000.5.col.txt,guloso,d=1,1769088856,0.0589916,86
+instances/dsjc250.5.col.txt,guloso,d=1,1769088882,0.0016111,27
